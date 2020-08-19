@@ -18,11 +18,13 @@ public class Cglib2AopProxyTest {
 		HelloWorldService helloWorldService = (HelloWorldService) applicationContext.getBean("helloWorldService");
 		helloWorldService.helloWorld();
 
+		
+		
+		System.out.println("******************helloWorldService with AOP**************");
 		// --------- helloWorldService with AOP
 		// 1. 设置被代理对象(Joinpoint)
 		AdvisedSupport advisedSupport = new AdvisedSupport();
-		TargetSource targetSource = new TargetSource(helloWorldService, HelloWorldServiceImpl.class,
-				HelloWorldService.class);
+		TargetSource targetSource = new TargetSource(helloWorldService, HelloWorldServiceImpl.class,HelloWorldService.class);
 		advisedSupport.setTargetSource(targetSource);
 
 		// 2. 设置拦截器(Advice)

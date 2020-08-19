@@ -4,6 +4,9 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+
+import com.alibaba.fastjson.JSON;
+
 import us.codecraft.tinyioc.BeanReference;
 import us.codecraft.tinyioc.beans.AbstractBeanDefinitionReader;
 import us.codecraft.tinyioc.beans.BeanDefinition;
@@ -31,6 +34,7 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
 	}
 
 	protected void doLoadBeanDefinitions(InputStream inputStream) throws Exception {
+		System.out.println("xml解析");
 		//xml解析
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder docBuilder = factory.newDocumentBuilder();
@@ -48,6 +52,7 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
 
 	protected void parseBeanDefinitions(Element root) {
 		NodeList nl = root.getChildNodes();
+		System.out.println("bean集合 put 值 开始 ,getRegistry().size()="+getRegistry().size());
 		for (int i = 0; i < nl.getLength(); i++) {
 			Node node = nl.item(i);
 			if (node instanceof Element) {
@@ -55,6 +60,8 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
 				processBeanDefinition(ele);
 			}
 		}
+		System.out.println("bean集合 put 值  end ,getRegistry().size()="+getRegistry().size());
+		System.out.println("bean集合 put 值  end ,getRegistry()="+JSON.toJSONString(getRegistry()));
 	}
 
 	protected void processBeanDefinition(Element ele) {
@@ -66,6 +73,7 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
 		processProperty(ele, beanDefinition);
 		//注册Class
 		beanDefinition.setBeanClassName(className);
+		
 		getRegistry().put(name, beanDefinition);
 	}
 

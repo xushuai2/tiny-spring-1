@@ -16,6 +16,7 @@ public class ClassPathXmlApplicationContext extends AbstractApplicationContext {
 	private String configLocation;
 
 	public ClassPathXmlApplicationContext(String configLocation) throws Exception {
+		//可自动装配内容的BeanFactory ： AutowireCapableBeanFactory
 		this(configLocation, new AutowireCapableBeanFactory());
 	}
 
@@ -32,6 +33,7 @@ public class ClassPathXmlApplicationContext extends AbstractApplicationContext {
 		XmlBeanDefinitionReader xmlBeanDefinitionReader = new XmlBeanDefinitionReader(new ResourceLoader());
 		xmlBeanDefinitionReader.loadBeanDefinitions(configLocation);
 		//注册bean,这里bean已经加载到虚拟机中，但还没有实例化对象，先不急嘛。
+		System.out.println("注册bean,这里bean已经加载到虚拟机中，但还没有实例化对象，先不急嘛");
 		for (Map.Entry<String, BeanDefinition> beanDefinitionEntry : xmlBeanDefinitionReader.getRegistry().entrySet()) {
 			beanFactory.registerBeanDefinition(beanDefinitionEntry.getKey(), beanDefinitionEntry.getValue());
 		}
